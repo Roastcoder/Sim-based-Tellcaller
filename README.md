@@ -1,181 +1,249 @@
-# 4-Level RBAC Implementation for Telecaller SaaS
+<h1 align="center">📞 Telecaller SaaS Platform 📞</h1>
+<h3 align="center">Complete 4-Level RBAC Telecaller Dashboard with Mobile API Integration</h3>
+<p align="center">Built by <b>RoastCoder</b> (Yogendra Singh) 🔥</p>
 
-Complete implementation of **Super Admin → Admin → Manager → Agent** hierarchy with permissions, database schema, API middleware, and mobile app configurations.
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-11-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" />
+  <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/TailwindCSS-3.3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+</p>
 
-## Quick Start
+---
 
-1. **Database Setup**
-   ```bash
-   mysql -u root -p < database/schema.sql
-   mysql -u root -p < database/seed.sql
-   ```
+## 🚀 What This Beast Does
 
-2. **Environment Variables**
-   ```bash
-   JWT_SECRET=your_jwt_secret_here
-   DB_HOST=localhost
-   DB_NAME=telecaller_saas
-   DB_USER=root
-   DB_PASS=password
-   ```
+A **production-ready** Telecaller SaaS platform with complete dashboard system, mobile API integration, and advanced RBAC hierarchy. Perfect for telemarketing companies, sales teams, and call centers.
 
-3. **API Server (Node.js/Express)**
-   ```bash
-   npm install express jsonwebtoken bcryptjs mysql2
-   node api/server.js
-   ```
+### 🎯 **Core Features**
+- 🏢 **4-Level Role Hierarchy**: Super Admin → Admin → Manager → Agent
+- 🏗️ **Multi-Tenant Architecture**: Complete company isolation
+- 📱 **Mobile API**: Full REST API for Android/iOS apps
+- 📊 **Advanced Dashboard**: Role-based analytics and reporting
+- 🔒 **Device Management**: Secure device binding and control
+- 📦 **App Management**: APK upload, versioning, and distribution
 
-## Role Hierarchy
+---
 
-| Role | ID | Scope | Key Permissions |
-|------|----|----|-----------------|
-| **SUPER_ADMIN** | 1 | Platform | All companies, billing, platform settings |
-| **ADMIN** | 2 | Company | Company users, billing, all teams |
-| **MANAGER** | 3 | Team | Team members, team leads, team reports |
-| **AGENT** | 4 | Self | Assigned leads, own calls, self stats |
+## 🔥 Live Demo & Screenshots
 
-## API Endpoints
+<p align="center">
+  <img src="https://via.placeholder.com/800x400/1f2937/ffffff?text=Super+Admin+Dashboard" alt="Super Admin Dashboard" />
+</p>
 
-### Authentication
-- `POST /auth/login` - User login
-- `POST /auth/register` - User registration
+<p align="center">
+  <img width="49%" src="https://via.placeholder.com/400x300/3b82f6/ffffff?text=Agent+Dashboard" alt="Agent Dashboard" />
+  <img width="49%" src="https://via.placeholder.com/400x300/10b981/ffffff?text=Apps+Management" alt="Apps Management" />
+</p>
 
-### Role-Protected Routes
-```typescript
-// Super Admin only
-GET /admin/companies          // View all companies
-POST /admin/companies         // Create company
-DELETE /admin/companies/:id   // Delete company
+---
 
-// Admin and above
-GET /users                    // Company-scoped users
-POST /users                   // Create users
-GET /billing                  // Company billing
-POST /leads/import           // Import leads
+## 🛠️ Tech Stack
 
-// Manager and above  
-GET /teams/:id/leads         // Team leads
-POST /leads/assign           // Assign leads
-GET /teams/:id/stats         // Team stats
+### 🎨 Frontend
+<p>
+  <img src="https://skillicons.dev/icons?i=html,css,js,tailwind,alpine" />
+</p>
 
-// All authenticated users
-POST /call-logs              // Log calls
-GET /my-leads               // Assigned leads
-PUT /leads/:id/disposition  // Update disposition
+### 🔧 Backend & Database
+<p>
+  <img src="https://skillicons.dev/icons?i=php,laravel,mysql,redis" />
+</p>
+
+### 🚀 DevOps & Tools
+<p>
+  <img src="https://skillicons.dev/icons?i=docker,nginx,git,github,vscode" />
+</p>
+
+---
+
+## ⚡ Quick Start
+
+### 🐳 Docker Setup (Recommended)
+```bash
+# Clone the repository
+git clone https://github.com/RoastCoder/telecaller-saas.git
+cd telecaller-saas
+
+# Start with Docker
+cp .env.example .env
+docker-compose -f docker/docker-compose.yml up -d
+
+# Setup database
+docker-compose exec app php artisan migrate --seed
 ```
 
-## Database Schema
+### 🔧 Manual Setup
+```bash
+# Install dependencies
+composer install
+npm install
 
-Core tables:
-- `roles` - Role definitions (1-4)
-- `companies` - Multi-tenant companies
-- `users` - All system users with role_id
-- `teams` - Manager-owned teams
-- `leads` - Customer leads with assignments
-- `call_logs` - Call records with device sync
-- `agent_stats` - Daily performance metrics
-- `audit_logs` - Action tracking
+# Setup environment
+cp .env.example .env
+php artisan key:generate
 
-## Mobile App (Android)
+# Database setup
+php artisan migrate --seed
+npm run build
 
-### Required Permissions
-```xml
-<uses-permission android:name="android.permission.READ_CALL_LOG" />
-<uses-permission android:name="android.permission.CALL_PHONE" />
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+# Start server
+php artisan serve
 ```
 
-### Role-Based Features
-- **Agent**: Full mobile experience, call logging, voice notes
-- **Manager**: Team stats, lead assignment, monitoring
-- **Admin**: Company dashboard, user management
-- **Super Admin**: Web-only access
+---
 
-## Middleware Usage
+## 🎭 Demo Accounts
 
-### TypeScript/Express
-```typescript
-import { requireRole, Role } from './middleware/auth';
+| Role | Email | Password | Access Level |
+|------|-------|----------|--------------|
+| 🔥 **Super Admin** | `admin@platform.com` | `password123` | Platform-wide |
+| 👑 **Admin** | `john@democorp.com` | `password123` | Company-level |
+| 🎯 **Manager** | `mike@democorp.com` | `password123` | Team-level |
+| 📞 **Agent** | `smith@democorp.com` | `password123` | Self-access |
 
-// Admin only route
-app.get('/admin/users', requireRole(Role.ADMIN), handler);
+---
 
-// Company-scoped access
-app.get('/companies/:id/data', requireCompanyAccess(), handler);
+## 📱 Mobile API Integration
+
+### 🔐 Authentication
+```bash
+curl -X POST http://localhost:8000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "smith@democorp.com",
+    "password": "password123",
+    "device_info": {
+      "device_id": "android_123456",
+      "device_name": "Samsung Galaxy S21"
+    }
+  }'
 ```
 
-### PHP/Laravel
-```php
-// Route with role middleware
-Route::middleware([RBACMiddleware::requireRole(RBACMiddleware::ADMIN)])
-    ->get('/admin/users', 'AdminController@users');
-
-// Check permissions in controller
-if (!RBACMiddleware::canViewLeads($user, $leadCompanyId)) {
-    return response()->json(['error' => 'forbidden'], 403);
-}
+### 📊 Call Logging
+```bash
+curl -X POST http://localhost:8000/api/v1/call-logs \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -d '{
+    "phone": "+1234567890",
+    "call_type": "outgoing",
+    "duration_seconds": 120,
+    "disposition": "interested"
+  }'
 ```
 
-## Security Features
+---
 
-- **JWT Authentication** with role-based claims
-- **Company Scoping** - Users only access their company data
-- **Team Scoping** - Managers only access their team data
-- **Audit Logging** - All actions tracked with user context
-- **Device Binding** - Optional mobile device registration
-- **Idempotency** - Duplicate call prevention with device_call_id
-
-## Data Privacy
-
-- Voice notes stored in encrypted S3 buckets
-- Configurable data retention policies
-- PII masking in exports (role-dependent)
-- Audit trail for all data deletions
-- GDPR-compliant data handling
-
-## Deployment Checklist
-
-- [ ] Database schema deployed
-- [ ] Seed data inserted (Super Admin created)
-- [ ] JWT secret configured
-- [ ] S3 bucket for voice notes setup
-- [ ] Rate limiting configured
-- [ ] SSL certificates installed
-- [ ] Monitoring and logging setup
-- [ ] Backup strategy implemented
-
-## File Structure
+## 🏗️ Architecture Overview
 
 ```
-├── database/
-│   ├── schema.sql          # Complete DB schema
-│   └── seed.sql           # Sample data
-├── api/
-│   ├── middleware/
-│   │   ├── auth.ts        # TypeScript middleware
-│   │   └── rbac.php       # PHP middleware
-│   └── routes.ts          # API endpoints
-├── types/
-│   └── rbac.ts           # TypeScript definitions
-├── config/
-│   └── rbac.json         # Role permissions config
-├── mobile/
-│   ├── android-permissions.xml
-│   └── role-based-ui.ts  # Mobile UI config
-└── README.md
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Super Admin   │    │      Admin      │    │     Manager     │
+│  Platform-wide  │───▶│  Company-level  │───▶│   Team-level    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                                        │
+                                               ┌─────────────────┐
+                                               │      Agent      │
+                                               │   Self-access   │
+                                               └─────────────────┘
 ```
 
-## Testing
+---
 
-Test with different role users:
-- Super Admin: `admin@platform.com`
-- Company Admin: `john@democorp.com` 
-- Manager: `mike@democorp.com`
-- Agent: `smith@democorp.com`
+## 🔒 Security Features
 
-Default password: `password123` (change in production)
+- 🛡️ **JWT Authentication** with device binding
+- 🏢 **Multi-tenant isolation** with company scoping
+- 🔐 **Role-based permissions** at API and UI level
+- 📱 **Device management** with remote lock/unlock
+- 📝 **Audit logging** for all user actions
+- 🚫 **IP whitelisting** and rate limiting
 
-## Support
+---
 
-For implementation questions or customization needs, refer to the inline code comments and configuration files.# Sim-based-Tellcaller
+## 📊 Permission Matrix
+
+| Feature | Super Admin | Admin | Manager | Agent |
+|---------|:-----------:|:-----:|:-------:|:-----:|
+| Companies | ✅ All | ❌ | ❌ | ❌ |
+| Users | ✅ All | ✅ Company | ✅ Team | ❌ |
+| Leads | ✅ All | ✅ Company | ✅ Team | ✅ Assigned |
+| Call Logs | ✅ All | ✅ Company | ✅ Team | ✅ Own |
+| Apps | ✅ Manage | ✅ Company | ✅ View | ✅ View |
+| Devices | ✅ All | ✅ Company | ✅ Team | ✅ Own |
+
+---
+
+## 🚀 Deployment
+
+### 🐳 Production Docker
+```bash
+# Build production image
+docker build -f docker/Dockerfile -t telecaller-saas:latest .
+
+# Deploy with production compose
+docker-compose -f docker/docker-compose.prod.yml up -d
+```
+
+### ☁️ Cloud Deployment
+- **AWS**: ECS + RDS + ElastiCache
+- **DigitalOcean**: App Platform + Managed Database
+- **Google Cloud**: Cloud Run + Cloud SQL
+
+---
+
+## 📚 Documentation
+
+- 📖 **[API Documentation](docs/api.yaml)** - Complete OpenAPI 3.0 spec
+- 🏗️ **[Architecture Guide](docs/architecture.md)** - System design overview
+- 🔧 **[Installation Guide](docs/installation.md)** - Detailed setup instructions
+- 🔒 **[Security Guide](docs/security.md)** - Security best practices
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🔗 Connect With The Creator
+
+<p align="left">
+  <a href="https://www.linkedin.com/in/yogendra-singh-4279251b1" target="_blank">
+    <img src="https://skillicons.dev/icons?i=linkedin" width="40"/>
+  </a>
+  <a href="mailto:iamfaujdar@gmail.com">
+    <img src="https://skillicons.dev/icons?i=gmail" width="40"/>
+  </a>
+  <a href="https://github.com/RoastCoder" target="_blank">
+    <img src="https://skillicons.dev/icons?i=github" width="40"/>
+  </a>
+</p>
+
+---
+
+## 🔥 Developer Quote
+> "I don't just build SaaS platforms... I architect digital empires that scale!" 😎🚀
+
+---
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=RoastCoder&repo=telecaller-saas&theme=tokyonight" />
+</p>
+
+---
+
+<p align="center">⭐ If this project helped you, show some ❤️ by starring the repository!</p>
+<p align="center">🚀 Built with passion by <b>RoastCoder</b> | Founder @ StandaloneCoders</p>

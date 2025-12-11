@@ -1,0 +1,113 @@
+{
+  "roles": {
+    "SUPER_ADMIN": {
+      "role_id": 1,
+      "name": "Super Admin",
+      "permissions": {
+        "company.manage": true,
+        "billing.manage": true,
+        "team.manage": true,
+        "lead.assign": "all",
+        "lead.view": "all",
+        "lead.import": true,
+        "lead.export": true,
+        "report.view": "all",
+        "calllogs.view": "all",
+        "user.create": true,
+        "user.delete": true,
+        "data.retention": true,
+        "ai.insights": "all"
+      }
+    },
+    "ADMIN": {
+      "role_id": 2,
+      "name": "Admin",
+      "permissions": {
+        "company.manage": "own",
+        "billing.manage": "own",
+        "team.manage": "company",
+        "lead.assign": "company",
+        "lead.view": "company",
+        "lead.import": true,
+        "lead.export": true,
+        "report.view": "company",
+        "calllogs.view": "company",
+        "user.create": "company",
+        "user.delete": "company",
+        "data.retention": "company",
+        "ai.insights": "company"
+      }
+    },
+    "MANAGER": {
+      "role_id": 3,
+      "name": "Manager",
+      "permissions": {
+        "team.manage": "own",
+        "lead.assign": "team",
+        "lead.view": "team",
+        "lead.import": "team",
+        "lead.export": "team",
+        "report.view": "team",
+        "calllogs.view": "team",
+        "user.create": "team",
+        "ai.insights": "team",
+        "voice.notes.add": true,
+        "voice.notes.play": "team"
+      }
+    },
+    "AGENT": {
+      "role_id": 4,
+      "name": "Agent",
+      "permissions": {
+        "lead.assign": false,
+        "lead.view": "assigned",
+        "lead.update": "assigned",
+        "report.view": "self",
+        "calllogs.view": "self",
+        "calllogs.create": true,
+        "ai.insights": "self",
+        "voice.notes.add": true,
+        "voice.notes.play": "self"
+      }
+    }
+  },
+  "ui_rules": {
+    "sidebar": {
+      "SUPER_ADMIN": ["dashboard", "companies", "users", "billing", "reports", "settings"],
+      "ADMIN": ["dashboard", "users", "teams", "leads", "reports", "billing", "settings"],
+      "MANAGER": ["dashboard", "team", "leads", "reports", "agents"],
+      "AGENT": ["dashboard", "my_leads", "my_calls", "my_stats"]
+    },
+    "actions": {
+      "create_user": [1, 2, 3],
+      "delete_user": [1, 2],
+      "assign_leads": [1, 2, 3],
+      "import_leads": [1, 2, 3],
+      "export_data": [1, 2, 3],
+      "view_billing": [1, 2],
+      "manage_teams": [1, 2, 3]
+    }
+  },
+  "mobile_permissions": {
+    "AGENT": {
+      "call_logging": true,
+      "voice_notes": true,
+      "lead_updates": true,
+      "offline_sync": true,
+      "background_service": true
+    },
+    "MANAGER": {
+      "team_stats": true,
+      "lead_reassign": true,
+      "team_reports": true
+    },
+    "ADMIN": {
+      "company_dashboard": true,
+      "user_management": true,
+      "company_reports": true
+    },
+    "SUPER_ADMIN": {
+      "platform_access": "web_only"
+    }
+  }
+}

@@ -1,0 +1,803 @@
+openapi: 3.0.3
+info:
+  title: Telecaller SaaS API
+  description: Complete API documentation for Telecaller SaaS Platform with 4-Level RBAC
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@telecaller-saas.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.telecaller-saas.com/v1
+    description: Production server
+  - url: https://staging-api.telecaller-saas.com/v1
+    description: Staging server
+  - url: http://localhost:8000/api/v1
+    description: Development server
+
+security:
+  - BearerAuth: []
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: Authenticate user and return access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: agent@democorp.com
+                password:
+                  type: string
+                  format: password
+                  example: password123
+                device_info:
+                  type: object
+                  properties:
+                    device_id:
+                      type: string
+                      example: "android_123456789"
+                    device_name:
+                      type: string
+                      example: "Samsung Galaxy S21"
+                    model:
+                      type: string
+                      example: "SM-G991B"
+                    manufacturer:
+                      type: string
+                      example: "Samsung"
+                    os_version:
+                      type: string
+                      example: "Android 13"
+                    app_version:
+                      type: string
+                      example: "1.2.3"
+                    app_version_code:
+                      type: integer
+                      example: 123
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Login successful
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/User'
+                      token:
+                        type: string
+                        example: "1|abc123def456..."
+                      device:
+                        $ref: '#/components/schemas/Device'
+                      permissions:
+                        type: array
+                        items:
+                          type: string
+                        example: ["leads.view.assigned", "call_logs.create"]
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /auth/device-bind:
+    post:
+      tags:
+        - Authentication
+      summary: Bind device to user
+      description: Register and bind a mobile device to the authenticated user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - device_id
+                - device_name
+                - model
+                - manufacturer
+                - os_version
+                - app_version
+                - app_version_code
+              properties:
+                device_id:
+                  type: string
+                  example: "android_123456789"
+                device_name:
+                  type: string
+                  example: "Samsung Galaxy S21"
+                model:
+                  type: string
+                  example: "SM-G991B"
+                manufacturer:
+                  type: string
+                  example: "Samsung"
+                os_version:
+                  type: string
+                  example: "Android 13"
+                app_version:
+                  type: string
+                  example: "1.2.3"
+                app_version_code:
+                  type: integer
+                  example: 123
+      responses:
+        '200':
+          description: Device bound successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Device bound successfully
+                  data:
+                    type: object
+                    properties:
+                      device:
+                        $ref: '#/components/schemas/Device'
+
+  /leads:
+    get:
+      tags:
+        - Leads
+      summary: Get leads list
+      description: Retrieve leads based on user role and permissions
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [new, contacted, interested, follow_up, converted, lost]
+        - name: priority
+          in: query
+          schema:
+            type: string
+            enum: [low, medium, high]
+        - name: assigned_to
+          in: query
+          schema:
+            type: integer
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Leads retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      leads:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Lead'
+                      pagination:
+                        $ref: '#/components/schemas/Pagination'
+
+    post:
+      tags:
+        - Leads
+      summary: Create new lead
+      description: Create a new lead (Manager+ only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadInput'
+      responses:
+        '201':
+          description: Lead created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Lead created successfully
+                  data:
+                    type: object
+                    properties:
+                      lead:
+                        $ref: '#/components/schemas/Lead'
+
+  /call-logs:
+    get:
+      tags:
+        - Call Logs
+      summary: Get call logs
+      description: Retrieve call logs based on user permissions
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: date_from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: date_to
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: call_type
+          in: query
+          schema:
+            type: string
+            enum: [incoming, outgoing, missed]
+        - name: disposition
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Call logs retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      call_logs:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/CallLog'
+                      pagination:
+                        $ref: '#/components/schemas/Pagination'
+
+    post:
+      tags:
+        - Call Logs
+      summary: Create call log
+      description: Log a new call from mobile device
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CallLogInput'
+      responses:
+        '201':
+          description: Call log created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Call log created successfully
+                  data:
+                    type: object
+                    properties:
+                      call_log:
+                        $ref: '#/components/schemas/CallLog'
+
+  /call-logs/batch:
+    post:
+      tags:
+        - Call Logs
+      summary: Batch create call logs
+      description: Upload multiple call logs at once
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - call_logs
+              properties:
+                call_logs:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CallLogInput'
+                  maxItems: 100
+      responses:
+        '200':
+          description: Batch upload completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Batch upload completed
+                  data:
+                    type: object
+                    properties:
+                      processed:
+                        type: integer
+                        example: 45
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            index:
+                              type: integer
+                            error:
+                              type: string
+
+  /apps:
+    get:
+      tags:
+        - Apps
+      summary: Get available apps
+      description: Get list of mobile apps available for download
+      parameters:
+        - name: channel
+          in: query
+          schema:
+            type: string
+            enum: [internal, beta, stable]
+        - name: package_name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Apps retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      apps:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/App'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          example: "john@example.com"
+        role_id:
+          type: integer
+          example: 4
+        role_name:
+          type: string
+          example: "Agent"
+        company_id:
+          type: integer
+          example: 1
+        team_id:
+          type: integer
+          nullable: true
+          example: 1
+        avatar:
+          type: string
+          nullable: true
+          example: "avatars/user1.jpg"
+
+    Lead:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Jane Smith"
+        phone:
+          type: string
+          example: "+1234567890"
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: "jane@example.com"
+        status:
+          type: string
+          enum: [new, contacted, interested, follow_up, converted, lost]
+          example: "new"
+        priority:
+          type: string
+          enum: [low, medium, high]
+          example: "medium"
+        assigned_to:
+          type: integer
+          nullable: true
+          example: 5
+        source:
+          type: string
+          nullable: true
+          example: "website"
+        notes:
+          type: string
+          nullable: true
+          example: "Interested in premium package"
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
+    LeadInput:
+      type: object
+      required:
+        - name
+        - phone
+      properties:
+        name:
+          type: string
+          example: "Jane Smith"
+        phone:
+          type: string
+          example: "+1234567890"
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: "jane@example.com"
+        address:
+          type: string
+          nullable: true
+          example: "123 Main St, City, State"
+        source:
+          type: string
+          nullable: true
+          example: "website"
+        priority:
+          type: string
+          enum: [low, medium, high]
+          default: medium
+        notes:
+          type: string
+          nullable: true
+          example: "Interested in premium package"
+        custom_fields:
+          type: object
+          nullable: true
+          example: {"budget": "10000", "timeline": "Q2"}
+
+    CallLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        lead_id:
+          type: integer
+          nullable: true
+          example: 1
+        phone:
+          type: string
+          example: "+1234567890"
+        call_type:
+          type: string
+          enum: [incoming, outgoing, missed]
+          example: "outgoing"
+        duration_seconds:
+          type: integer
+          example: 120
+        start_time:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2024-01-15T10:32:00Z"
+        disposition:
+          type: string
+          nullable: true
+          example: "interested"
+        note:
+          type: string
+          nullable: true
+          example: "Customer showed interest"
+        voice_note_path:
+          type: string
+          nullable: true
+          example: "voice-notes/call_123.mp3"
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
+    CallLogInput:
+      type: object
+      required:
+        - phone
+        - call_type
+        - start_time
+        - device_call_id
+      properties:
+        lead_id:
+          type: integer
+          nullable: true
+          example: 1
+        phone:
+          type: string
+          example: "+1234567890"
+        call_type:
+          type: string
+          enum: [incoming, outgoing, missed]
+          example: "outgoing"
+        duration_seconds:
+          type: integer
+          default: 0
+          example: 120
+        start_time:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2024-01-15T10:32:00Z"
+        disposition:
+          type: string
+          nullable: true
+          example: "interested"
+        note:
+          type: string
+          nullable: true
+          example: "Customer showed interest"
+        device_call_id:
+          type: string
+          example: "device_123_call_456"
+
+    Device:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        device_id:
+          type: string
+          example: "android_123456789"
+        device_name:
+          type: string
+          example: "Samsung Galaxy S21"
+        model:
+          type: string
+          example: "SM-G991B"
+        manufacturer:
+          type: string
+          example: "Samsung"
+        os_version:
+          type: string
+          example: "Android 13"
+        app_version:
+          type: string
+          example: "1.2.3"
+        is_active:
+          type: boolean
+          example: true
+        last_sync_at:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2024-01-15T10:30:00Z"
+
+    App:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Telecaller Mobile"
+        package_name:
+          type: string
+          example: "com.telecaller.mobile"
+        version_name:
+          type: string
+          example: "1.2.3"
+        version_code:
+          type: integer
+          example: 123
+        channel:
+          type: string
+          enum: [internal, beta, stable]
+          example: "stable"
+        status:
+          type: string
+          enum: [active, deprecated, disabled]
+          example: "active"
+        file_size:
+          type: integer
+          example: 25600000
+        download_url:
+          type: string
+          example: "https://api.telecaller-saas.com/apps/1/download"
+        changelog:
+          type: string
+          nullable: true
+          example: "Bug fixes and performance improvements"
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
+    Pagination:
+      type: object
+      properties:
+        current_page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 20
+        total:
+          type: integer
+          example: 150
+        last_page:
+          type: integer
+          example: 8
+        from:
+          type: integer
+          example: 1
+        to:
+          type: integer
+          example: 20
+
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        message:
+          type: string
+          example: "Validation failed"
+        errors:
+          type: object
+          example:
+            email: ["The email field is required."]
+            password: ["The password field is required."]
+
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: error
+              message:
+                type: string
+                example: "Unauthorized"
+
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: error
+              message:
+                type: string
+                example: "Insufficient permissions"
+
+    ValidationError:
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: error
+              message:
+                type: string
+                example: "Resource not found"
