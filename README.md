@@ -261,34 +261,17 @@ docker-compose -f docker-compose.prod.yml up -d
 
 ---
 
-## 📄 **Copyright & License**
+## 📄 **License**
 
-### **Proprietary Software License**
+### **MIT License**
 
-**© 2024 StandaloneCoders. All Rights Reserved.**
+**© 2024 StandaloneCoders**
 
-This software and associated documentation files (the "Software") are proprietary and confidential to StandaloneCoders. The Software is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-### **Restrictions**
-- **NO MODIFICATION**: The source code may not be modified, altered, or adapted in any way.
-- **NO REDISTRIBUTION**: The Software may not be distributed, sublicensed, or transferred to any third party.
-- **NO REVERSE ENGINEERING**: Reverse engineering, decompilation, or disassembly of the Software is strictly prohibited.
-- **NO COMMERCIAL USE**: The Software may not be used for commercial purposes without explicit written permission.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-### **Permitted Use**
-- Personal evaluation and testing
-- Educational purposes (with attribution)
-- Internal business use (with valid license)
-
-### **Violation Consequences**
-Any unauthorized use, modification, or distribution of this Software will result in:
-- Immediate termination of usage rights
-- Legal action for copyright infringement
-- Monetary damages and legal fees
-- Criminal prosecution where applicable
-
-### **Contact**
-For licensing inquiries: **contact@standalonecoders.com**
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
@@ -308,4 +291,4 @@ For licensing inquiries: **contact@standalonecoders.com**
 
 ---
 
-**⚠️ IMPORTANT NOTICE**: This is proprietary software. Unauthorized copying, modification, or distribution is strictly prohibited and will result in legal action.
+**🔓 OPEN SOURCE**: This project is licensed under the MIT License. Feel free to use, modify, and distribute according to the license terms.
