@@ -1,249 +1,311 @@
-<h1 align="center">📞 Telecaller SaaS Platform 📞</h1>
-<h3 align="center">Complete 4-Level RBAC Telecaller Dashboard with Mobile API Integration</h3>
-<p align="center">Built by <b>RoastCoder</b> (Yogendra Singh) 🔥</p>
+# 📞 StandaloneCoders Telecaller SaaS Platform
 
 <p align="center">
   <img src="https://img.shields.io/badge/Laravel-11-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" />
   <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" />
   <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
   <img src="https://img.shields.io/badge/TailwindCSS-3.3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
-  <img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
 </p>
 
 ---
 
-## 🚀 What This Beast Does
+## 🚀 **Complete Telecaller SaaS Platform**
 
-A **production-ready** Telecaller SaaS platform with complete dashboard system, mobile API integration, and advanced RBAC hierarchy. Perfect for telemarketing companies, sales teams, and call centers.
+A **production-ready** Telecaller SaaS platform with complete dashboard system, mobile API integration, advanced RBAC hierarchy, and auto-dialer functionality. Perfect for telemarketing companies, sales teams, and call centers.
 
 ### 🎯 **Core Features**
-- 🏢 **4-Level Role Hierarchy**: Super Admin → Admin → Manager → Agent
-- 🏗️ **Multi-Tenant Architecture**: Complete company isolation
-- 📱 **Mobile API**: Full REST API for Android/iOS apps
-- 📊 **Advanced Dashboard**: Role-based analytics and reporting
-- 🔒 **Device Management**: Secure device binding and control
-- 📦 **App Management**: APK upload, versioning, and distribution
+
+#### **🏢 4-Level Role-Based Access Control (RBAC)**
+- **Super Admin** → Platform-wide management
+- **Admin** → Company-level management  
+- **Manager** → Team-level management
+- **Agent** → Self-access with auto-dialer
+
+#### **📱 Mobile API Integration**
+- Complete REST API for Android/iOS apps
+- Device binding and management
+- Real-time synchronization
+- JWT authentication with device control
+
+#### **🤖 Auto Dialer System**
+- Android device integration with SIM cards
+- Automated calling with lead progression
+- Call disposition tracking (Interested, Not Interested, Callback, etc.)
+- Real-time call timer and duration logging
+- Agent-specific dialer management
+
+#### **📊 Advanced Analytics & Reporting**
+- Role-based dashboards
+- Real-time call statistics
+- Lead conversion tracking
+- Performance metrics and insights
+
+#### **💰 Subscription Management**
+- Multiple pricing tiers (₹2,499, ₹6,699, ₹16,699)
+- User and lead limits per plan
+- Automatic billing cycle management
+- Feature-based access control
 
 ---
 
-## 🔥 Live Demo & Screenshots
+## 🛠️ **Tech Stack**
 
-<p align="center">
-  <img src="https://via.placeholder.com/800x400/1f2937/ffffff?text=Super+Admin+Dashboard" alt="Super Admin Dashboard" />
-</p>
+### **Backend**
+- **Laravel 11** - PHP Framework
+- **PHP 8.2+** - Server-side language
+- **MySQL 8.0** - Primary database
+- **SQLite** - Development database
+- **Redis** - Caching and sessions
 
-<p align="center">
-  <img width="49%" src="https://via.placeholder.com/400x300/3b82f6/ffffff?text=Agent+Dashboard" alt="Agent Dashboard" />
-  <img width="49%" src="https://via.placeholder.com/400x300/10b981/ffffff?text=Apps+Management" alt="Apps Management" />
-</p>
+### **Frontend**
+- **Tailwind CSS** - Utility-first CSS framework
+- **Alpine.js** - Lightweight JavaScript framework
+- **Blade Templates** - Laravel templating engine
 
----
-
-## 🛠️ Tech Stack
-
-### 🎨 Frontend
-<p>
-  <img src="https://skillicons.dev/icons?i=html,css,js,tailwind,alpine" />
-</p>
-
-### 🔧 Backend & Database
-<p>
-  <img src="https://skillicons.dev/icons?i=php,laravel,mysql,redis" />
-</p>
-
-### 🚀 DevOps & Tools
-<p>
-  <img src="https://skillicons.dev/icons?i=docker,nginx,git,github,vscode" />
-</p>
+### **DevOps & Tools**
+- **Docker** - Containerization
+- **Vite** - Asset bundling
+- **Composer** - PHP dependency management
+- **NPM** - JavaScript package management
 
 ---
 
-## ⚡ Quick Start
+## ⚡ **Quick Start**
 
-### 🐳 Docker Setup (Recommended)
+### **Prerequisites**
+- PHP 8.2+
+- Composer
+- Node.js & NPM
+- MySQL/SQLite
+
+### **Installation**
 ```bash
 # Clone the repository
-git clone https://github.com/RoastCoder/telecaller-saas.git
+git clone https://github.com/StandaloneCoders/telecaller-saas.git
 cd telecaller-saas
 
-# Start with Docker
-cp .env.example .env
-docker-compose -f docker/docker-compose.yml up -d
-
-# Setup database
-docker-compose exec app php artisan migrate --seed
-```
-
-### 🔧 Manual Setup
-```bash
-# Install dependencies
+# Install PHP dependencies
 composer install
+
+# Install JavaScript dependencies
 npm install
 
 # Setup environment
 cp .env.example .env
 php artisan key:generate
 
-# Database setup
+# Setup database
 php artisan migrate --seed
+
+# Build assets
 npm run build
 
-# Start server
+# Start development server
 php artisan serve
 ```
 
+### **Access URLs**
+- **Application**: http://127.0.0.1:8000
+- **Login**: http://127.0.0.1:8000/login
+- **Register**: http://127.0.0.1:8000/register
+
 ---
 
-## 🎭 Demo Accounts
+## 🔐 **Demo Accounts**
 
 | Role | Email | Password | Access Level |
 |------|-------|----------|--------------|
 | 🔥 **Super Admin** | `admin@platform.com` | `password123` | Platform-wide |
 | 👑 **Admin** | `john@democorp.com` | `password123` | Company-level |
 | 🎯 **Manager** | `mike@democorp.com` | `password123` | Team-level |
-| 📞 **Agent** | `smith@democorp.com` | `password123` | Self-access |
+| 📞 **Agent** | `smith@democorp.com` | `password123` | Auto-dialer access |
 
 ---
 
-## 📱 Mobile API Integration
+## 📱 **Mobile API Endpoints**
 
-### 🔐 Authentication
+### **Authentication**
 ```bash
-curl -X POST http://localhost:8000/api/v1/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "smith@democorp.com",
-    "password": "password123",
-    "device_info": {
-      "device_id": "android_123456",
-      "device_name": "Samsung Galaxy S21"
-    }
-  }'
+POST /api/v1/auth/login
+POST /api/v1/auth/logout
+POST /api/v1/auth/refresh
 ```
 
-### 📊 Call Logging
+### **Auto Dialer Integration**
 ```bash
-curl -X POST http://localhost:8000/api/v1/call-logs \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -d '{
-    "phone": "+1234567890",
-    "call_type": "outgoing",
-    "duration_seconds": 120,
-    "disposition": "interested"
-  }'
+GET  /api/v1/auto-dialer/leads     # Get assigned leads
+POST /api/v1/auto-dialer/start     # Start calling session
+POST /api/v1/auto-dialer/log-call  # Log call disposition
+```
+
+### **Lead Management**
+```bash
+GET  /api/v1/leads                 # Get agent leads
+POST /api/v1/leads/{id}/update     # Update lead status
+GET  /api/v1/leads/{id}/timeline   # Get lead history
 ```
 
 ---
 
-## 🏗️ Architecture Overview
+## 🏗️ **System Architecture**
 
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Super Admin   │    │      Admin      │    │     Manager     │
-│  Platform-wide  │───▶│  Company-level  │───▶│   Team-level    │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                                        │
-                                               ┌─────────────────┐
-                                               │      Agent      │
-                                               │   Self-access   │
-                                               └─────────────────┘
-```
+### **Database Schema**
+- **Users & Roles** - RBAC implementation
+- **Companies & Teams** - Multi-tenant structure
+- **Leads & Call Logs** - Lead management system
+- **Auto Dialers** - Device and SIM management
+- **Subscription Plans** - Billing and limits
+- **Audit Logs** - Activity tracking
 
----
-
-## 🔒 Security Features
-
-- 🛡️ **JWT Authentication** with device binding
-- 🏢 **Multi-tenant isolation** with company scoping
-- 🔐 **Role-based permissions** at API and UI level
-- 📱 **Device management** with remote lock/unlock
-- 📝 **Audit logging** for all user actions
-- 🚫 **IP whitelisting** and rate limiting
-
----
-
-## 📊 Permission Matrix
-
+### **Permission Matrix**
 | Feature | Super Admin | Admin | Manager | Agent |
 |---------|:-----------:|:-----:|:-------:|:-----:|
 | Companies | ✅ All | ❌ | ❌ | ❌ |
 | Users | ✅ All | ✅ Company | ✅ Team | ❌ |
 | Leads | ✅ All | ✅ Company | ✅ Team | ✅ Assigned |
+| Auto Dialer | ✅ All | ✅ Company | ✅ Team | ✅ Own |
 | Call Logs | ✅ All | ✅ Company | ✅ Team | ✅ Own |
-| Apps | ✅ Manage | ✅ Company | ✅ View | ✅ View |
-| Devices | ✅ All | ✅ Company | ✅ Team | ✅ Own |
+| Subscriptions | ✅ Manage | ✅ Company | ✅ View | ✅ View |
 
 ---
 
-## 🚀 Deployment
+## 🤖 **Auto Dialer Features**
 
-### 🐳 Production Docker
+### **Device Management**
+- Android device registration with unique IDs
+- SIM card number tracking
+- Device status monitoring (Active/Inactive/Maintenance)
+- Daily call statistics and limits
+
+### **Calling Interface**
+- Automated lead progression
+- Real-time call timer
+- Call disposition buttons
+- Notes and feedback system
+- Start/Stop calling controls
+
+### **Disposition Types**
+- ✅ **Interested** - Lead shows interest
+- ❌ **Not Interested** - Lead not interested
+- 📅 **Callback** - Schedule follow-up call
+- 📵 **No Answer** - Lead didn't answer
+- 📞 **Busy** - Line was busy
+- 🚫 **Invalid** - Invalid phone number
+
+---
+
+## 💰 **Subscription Plans**
+
+### **Starter Plan - ₹2,499/month**
+- 5 Users
+- 1,000 Leads
+- Basic Dashboard
+- Email Support
+
+### **Professional Plan - ₹6,699/month**
+- 25 Users
+- 10,000 Leads
+- Advanced Analytics
+- Priority Support
+- API Access
+
+### **Enterprise Plan - ₹16,699/month**
+- 100 Users
+- 50,000 Leads
+- Custom Integrations
+- Dedicated Support
+- White Label Options
+
+---
+
+## 🔒 **Security Features**
+
+- **JWT Authentication** with device binding
+- **Multi-tenant isolation** with company scoping
+- **Role-based permissions** at API and UI level
+- **Device management** with remote control
+- **Audit logging** for all user actions
+- **IP whitelisting** and rate limiting
+- **Data encryption** and secure storage
+
+---
+
+## 🚀 **Deployment**
+
+### **Production Requirements**
+- **Server**: Ubuntu 20.04+ or CentOS 8+
+- **Web Server**: Nginx or Apache
+- **Database**: MySQL 8.0+ or PostgreSQL 13+
+- **Cache**: Redis 6.0+
+- **Queue**: Redis or Database
+- **Storage**: Local or AWS S3
+
+### **Docker Deployment**
 ```bash
 # Build production image
-docker build -f docker/Dockerfile -t telecaller-saas:latest .
+docker build -t telecaller-saas:latest .
 
-# Deploy with production compose
-docker-compose -f docker/docker-compose.prod.yml up -d
+# Run with docker-compose
+docker-compose -f docker-compose.prod.yml up -d
 ```
 
-### ☁️ Cloud Deployment
-- **AWS**: ECS + RDS + ElastiCache
-- **DigitalOcean**: App Platform + Managed Database
-- **Google Cloud**: Cloud Run + Cloud SQL
+---
+
+## 👥 **Development Team**
+
+### **StandaloneCoders**
+- **Yogendra Singh** - Lead Developer & Founder
+- **Govind Raajpoot** - Backend Developer
+- **Sparsh Jain** - Frontend Developer  
+- **Pranay Mukherjee** - Full Stack Developer
 
 ---
 
-## 📚 Documentation
+## 📄 **Copyright & License**
 
-- 📖 **[API Documentation](docs/api.yaml)** - Complete OpenAPI 3.0 spec
-- 🏗️ **[Architecture Guide](docs/architecture.md)** - System design overview
-- 🔧 **[Installation Guide](docs/installation.md)** - Detailed setup instructions
-- 🔒 **[Security Guide](docs/security.md)** - Security best practices
+### **Proprietary Software License**
 
----
+**© 2024 StandaloneCoders. All Rights Reserved.**
 
-## 🤝 Contributing
+This software and associated documentation files (the "Software") are proprietary and confidential to StandaloneCoders. The Software is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties.
 
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
+### **Restrictions**
+- **NO MODIFICATION**: The source code may not be modified, altered, or adapted in any way.
+- **NO REDISTRIBUTION**: The Software may not be distributed, sublicensed, or transferred to any third party.
+- **NO REVERSE ENGINEERING**: Reverse engineering, decompilation, or disassembly of the Software is strictly prohibited.
+- **NO COMMERCIAL USE**: The Software may not be used for commercial purposes without explicit written permission.
 
----
+### **Permitted Use**
+- Personal evaluation and testing
+- Educational purposes (with attribution)
+- Internal business use (with valid license)
 
-## 📄 License
+### **Violation Consequences**
+Any unauthorized use, modification, or distribution of this Software will result in:
+- Immediate termination of usage rights
+- Legal action for copyright infringement
+- Monetary damages and legal fees
+- Criminal prosecution where applicable
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🔗 Connect With The Creator
-
-<p align="left">
-  <a href="https://www.linkedin.com/in/yogendra-singh-4279251b1" target="_blank">
-    <img src="https://skillicons.dev/icons?i=linkedin" width="40"/>
-  </a>
-  <a href="mailto:iamfaujdar@gmail.com">
-    <img src="https://skillicons.dev/icons?i=gmail" width="40"/>
-  </a>
-  <a href="https://github.com/RoastCoder" target="_blank">
-    <img src="https://skillicons.dev/icons?i=github" width="40"/>
-  </a>
-</p>
+### **Contact**
+For licensing inquiries: **contact@standalonecoders.com**
 
 ---
 
-## 🔥 Developer Quote
-> "I don't just build SaaS platforms... I architect digital empires that scale!" 😎🚀
+## 🔗 **Links & Resources**
+
+- **Website**: https://standalonecoders.com
+- **Documentation**: https://docs.standalonecoders.com
+- **Support**: support@standalonecoders.com
+- **Sales**: sales@standalonecoders.com
 
 ---
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=RoastCoder&repo=telecaller-saas&theme=tokyonight" />
+  <strong>Built with ❤️ by StandaloneCoders</strong><br>
+  <em>"Building digital empires that scale!"</em>
 </p>
 
 ---
 
-<p align="center">⭐ If this project helped you, show some ❤️ by starring the repository!</p>
-<p align="center">🚀 Built with passion by <b>RoastCoder</b> | Founder @ StandaloneCoders</p>
+**⚠️ IMPORTANT NOTICE**: This is proprietary software. Unauthorized copying, modification, or distribution is strictly prohibited and will result in legal action.

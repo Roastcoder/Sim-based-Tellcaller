@@ -11,23 +11,12 @@
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.7",
-        "@tailwindcss/typography": "^0.5.10",
-        "@vitejs/plugin-laravel": "^1.0.0",
         "alpinejs": "^3.13.3",
         "autoprefixer": "^10.4.16",
         "axios": "^1.6.2",
-        "chart.js": "^4.4.0",
         "laravel-vite-plugin": "^1.0.0",
         "postcss": "^8.4.32",
         "tailwindcss": "^3.3.6",
-        "typescript": "^5.3.3",
         "vite": "^5.0.8"
-    },
-    "dependencies": {
-        "@headlessui/js": "^1.0.0",
-        "@heroicons/react": "^2.0.18",
-        "date-fns": "^3.0.6",
-        "dropzone": "^6.0.0-beta.2",
-        "sortablejs": "^1.15.1"
     }
 }

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             DeviceSeeder::class,
             CallLogSeeder::class,
             AgentStatSeeder::class,
+            SubscriptionPlanSeeder::class,
         ]);
     }
 }

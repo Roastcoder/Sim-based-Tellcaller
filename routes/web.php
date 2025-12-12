@@ -24,11 +24,15 @@ use App\Http\Controllers\Agent\DashboardController as AgentDashboardController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('welcome');
 });
 
 // Authentication Routes
-Auth::routes();
+Route::get('login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 
 // Protected Routes
 Route::middleware(['auth', 'company.scope'])->group(function () {
@@ -49,6 +53,7 @@ Route::middleware(['auth', 'company.scope'])->group(function () {
         Route::get('leads', [AgentDashboardController::class, 'leads'])->name('leads');
         Route::get('calls', [AgentDashboardController::class, 'calls'])->name('calls');
         Route::get('stats', [AgentDashboardController::class, 'stats'])->name('stats');
+        Route::get('auto-dialer', [\App\Http\Controllers\AutoDialerController::class, 'index'])->name('auto-dialer');
     });
     
     // Call Logs
@@ -86,6 +91,16 @@ Route::middleware(['auth', 'company.scope'])->group(function () {
         Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
         Route::post('settings', [SettingsController::class, 'update'])->name('settings.update');
     });
+    
+    // Subscription Management
+    Route::get('subscriptions', [\App\Http\Controllers\SubscriptionController::class, 'index'])->name('subscriptions.index');
+    Route::post('subscriptions/{plan}/subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscriptions.subscribe');
+    Route::delete('subscriptions/cancel', [\App\Http\Controllers\SubscriptionController::class, 'cancel'])->name('subscriptions.cancel');
+    
+    // Auto Dialer
+    Route::get('auto-dialer', [\App\Http\Controllers\AutoDialerController::class, 'index'])->name('auto-dialer.index');
+    Route::post('auto-dialer/start', [\App\Http\Controllers\AutoDialerController::class, 'startCalling'])->name('auto-dialer.start');
+    Route::post('auto-dialer/log-call', [\App\Http\Controllers\AutoDialerController::class, 'logCall'])->name('auto-dialer.log-call');
     
     // Super Admin Only Routes
     Route::middleware(['role:SUPER_ADMIN'])->group(function () {
